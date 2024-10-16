@@ -1,0 +1,48 @@
+.article {
+    border-radius: 20px;
+    padding: 30px;
+    box-sizing: border-box;
+    transition: box-shadow 0.2s ease;
+    width: 350px;
+    margin: 7px;
+    color: #0A0A0A;
+    text-decoration: none;
+
+    .type {
+        font-size: 12px;
+        font-weight: 600;
+        opacity: 30%;
+    }
+
+    .title {
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 20px;
+    }
+
+    .content {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 4;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 15px;
+    }
+
+    .editButton {
+        background-color: #0A0A0A;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 25px;
+        height: 25px;
+        border-radius: 5px;
+        margin-left: auto;
+    }
+
+    &:hover {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+}
