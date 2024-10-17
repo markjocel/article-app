@@ -9,8 +9,8 @@ import styles from './page.module.scss'
 const LoginPage = () => {
   const { login } = useAuth();
   const router = useRouter();
-  const [username, setUsername] = useState('Bret');
-  const [email, setEmail] = useState('Sincere@april.biz');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [error, setError] = useState('');
 
   const handleLogin = async () => {
@@ -25,7 +25,7 @@ const LoginPage = () => {
   return (
     <div className={styles.login}>
       <div className={styles.image}>
-        <Image src={`/login2.svg`} alt='Login' width={800} height={800}></Image>
+        <Image src={`/login2.svg`} alt='Login' width={600} height={700}></Image>
       </div>
       <div className={styles.form}>
 
