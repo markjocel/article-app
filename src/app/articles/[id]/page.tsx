@@ -1,10 +1,9 @@
 'use client'
 
 import ProtectedRoute from '@/components/ProtectedRoute';
-import { fetchArticleById, fetchArticles, updateArticle } from '../../../services/articleService';
+import { fetchArticleById, updateArticle } from '../../../services/articleService';
 import { Article } from '../../../types/Article';
 import { useEffect, useState } from 'react';
-import Header from '@/components/header/header';
 import ArticleForm from '@/components/article-form/article-form';
 import { useRouter } from 'next/navigation';
 import Modal from '@/components/modal/modal';
@@ -39,9 +38,11 @@ const EditArticlePage = ({ params }: { params: { id: string } }) => {
       const updatedArticle = await updateArticle(Number(id), articleData);
       setModalTitle("Success!");
       setMessage(`Article updated successfully: ${updatedArticle.id}`);
-    } catch (error: any) {
+    } catch (error: unknown) {
       setModalTitle("Oops!");
-      setMessage(error.message);
+      if (error instanceof Error) {
+        setMessage(error.message);
+      }
     } finally {
       setIsModalOpen(true);
       setLoading(false);

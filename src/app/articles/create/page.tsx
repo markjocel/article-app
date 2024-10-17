@@ -22,9 +22,11 @@ const CreateArticlePage = () => {
       const createdArticle = await createArticle(articleData);
       setModalTitle("Success!");
       setMessage(`Article created with ID: ${createdArticle.id}`);
-    } catch (error: any) {
+    } catch (error: unknown) {
       setModalTitle("Oops!");
-      setMessage(error.message);
+      if (error instanceof Error) {
+        setMessage(error.message);
+      }
     } finally {
       setIsModalOpen(true);
       setLoading(false);
