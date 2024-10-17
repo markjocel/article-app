@@ -8,12 +8,12 @@ import ProtectedRoute from '@/components/ProtectedRoute';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import Header from '@/components/header/header';
 import ArticleCard from '@/components/article-card/article-card';
 import Image from 'next/image';
+import LoadingOverlay from '@/components/loading-overlay/loading-overlay';
 
 const ArticlesPage = () => {
-  const { isAuthenticated, currentUser } = useAuth();
+  const { isAuthenticated } = useAuth();
   const router = useRouter();
   const [articles, setArticles] = useState<Article[]>([]);
   const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
@@ -53,11 +53,11 @@ const ArticlesPage = () => {
   }, [isAuthenticated, router]);
 
   if (loading) {
-    return <p>Loading articles...</p>; // Loading state
+    return <LoadingOverlay/>
   }
 
   if (!isAuthenticated) {
-    return null; // or a different loading/error message
+    return null;
   }
   return (
 

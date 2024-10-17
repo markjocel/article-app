@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import styles from './article-card.module.scss'; // Adjust the path if necessary
+import styles from './article-card.module.scss';
 import { Article } from '@/types/Article';
 import { getRandomColor } from '@/utils/randomColor';
 import { useEffect, useState } from 'react';

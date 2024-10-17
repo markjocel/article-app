@@ -1,6 +1,5 @@
-// components/Modal.tsx
 import React from 'react';
-import styles from './modal.module.scss'; // Adjust the path as necessary
+import styles from './modal.module.scss';
 
 interface ModalProps {
     message: string;

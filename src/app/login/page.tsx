@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '../../context/AuthContext'; // Adjust path as necessary
+import { useAuth } from '../../context/AuthContext';
 import Image from 'next/image';
 import styles from './page.module.scss'
 

@@ -1,7 +1,8 @@
 'use client'
 
 import { fetchUsers } from '@/services/userService';
-import { createContext, useContext, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { createContext, useContext, useState } from 'react';
 
 interface User {
   id: number;
@@ -22,6 +23,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const router = useRouter();
 
   const login = async (username: string, email: string) => {
     try {
@@ -31,17 +33,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (user) {
         setIsAuthenticated(true);
         setCurrentUser(user);
-        return true; // Login successful
+        return true;
       }
     } catch (error) {
       console.error('Error fetching users:', error);
     }
-    return false; // User not found
+    return false;
   };
 
   const logout = () => {
-    setIsAuthenticated(false); // Clear authenticated state
+    setIsAuthenticated(false);
     setCurrentUser(null);
+    router.push('/login');
   };
 
   return (

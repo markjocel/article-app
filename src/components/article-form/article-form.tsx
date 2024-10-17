@@ -1,15 +1,35 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import style from './article-form.module.scss'
 import Link from 'next/link';
 
-const ArticleForm = ({ initialValues, onSubmit, isEditing, formTitle, isLoading }: any) => {
+interface ArticleFormProps {
+    initialValues: { title: string; body: string };
+    onSubmit: (data: { title: string; body: string }) => void;
+    isEditing: boolean;
+    formTitle: string;
+    isLoading: boolean;
+}
+
+
+const ArticleForm: React.FC<ArticleFormProps> = ({
+    initialValues,
+    onSubmit,
+    isEditing,
+    formTitle,
+    isLoading,
+  }) => {
     const [title, setTitle] = useState(initialValues.title || '');
     const [body, setBody] = useState(initialValues.body || '');
 
-    const handleSubmit = (e: any) => {
+    useEffect(() => {
+      setTitle(initialValues.title || '');
+      setBody(initialValues.body || '');
+    }, [initialValues]);
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!isLoading) {
-            onSubmit({ title, body });
+          onSubmit({ title, body });
         }
     };
 

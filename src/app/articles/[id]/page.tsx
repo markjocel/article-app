@@ -8,6 +8,7 @@ import Header from '@/components/header/header';
 import ArticleForm from '@/components/article-form/article-form';
 import { useRouter } from 'next/navigation';
 import Modal from '@/components/modal/modal';
+import LoadingOverlay from '@/components/loading-overlay/loading-overlay';
 
 const EditArticlePage = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
@@ -32,20 +33,19 @@ const EditArticlePage = ({ params }: { params: { id: string } }) => {
     fetchArticle();
   }, [id]);
 
-  const handleSave = async () => {
+  const handleSave = async (articleData: { title: string; body: string }) => {
     setLoading(true);
-    if (article) {
-      try {
-        const updatedArticle = await updateArticle(Number(id), article);
-        setModalTitle("Success!")
-        setMessage(`Article updated successfully: ${updatedArticle.id}`);
-      } catch (error: any) {
-        setModalTitle("Oops!")
-        setMessage(error.message);
-      }
+    try {
+      const updatedArticle = await updateArticle(Number(id), articleData);
+      setModalTitle("Success!");
+      setMessage(`Article updated successfully: ${updatedArticle.id}`);
+    } catch (error: any) {
+      setModalTitle("Oops!");
+      setMessage(error.message);
+    } finally {
+      setIsModalOpen(true);
+      setLoading(false);
     }
-    setIsModalOpen(true);
-    setLoading(false);
   };
 
   const closeModal = () => {
@@ -54,14 +54,24 @@ const EditArticlePage = ({ params }: { params: { id: string } }) => {
   };
 
   if (!article) {
-    return <p>Loading...</p>;
+    return <LoadingOverlay/>
   }
 
   return (
     <ProtectedRoute>
-      <ArticleForm initialValues={article} onSubmit={handleSave} formTitle="Edit Article" message={message} isEditing isLoading={isLoading} />
+      <ArticleForm 
+      initialValues={article} 
+      onSubmit={handleSave} 
+      formTitle="Edit Article" 
+      isEditing 
+      isLoading={isLoading} />
+
       {isModalOpen && (
-        <Modal message={message} onClose={closeModal} title={modalTitle} />
+        <Modal 
+        message={message} 
+        onClose={closeModal} 
+        title={modalTitle} 
+        />
       )}
     </ProtectedRoute>
   );

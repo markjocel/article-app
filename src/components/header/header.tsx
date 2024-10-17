@@ -1,10 +1,25 @@
-import { AuthContextType, useAuth } from '@/context/AuthContext';
+'use client'
+
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './header.module.scss';
+import { usePathname } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 
 const Header = () => {
-    // const { currentUser } = useAuth();
+    const { currentUser, logout } = useAuth();
+  const pathname = usePathname();
+  const isLoginPage = pathname === '/login';
+
+  const handleLogout = () => {
+    try {
+        logout();
+    } catch (error) {
+        console.error("Logout failed:", error);
+    }
+};
+
+  if (isLoginPage) return null;
 
     return (
         <header className={styles.header}>
@@ -22,7 +37,11 @@ const Header = () => {
                 </div>
 
                 <div className={styles.user}>
-                    {/* {`Hello 👋 ${authContext.currentUser?.name}!`} */}
+                    {`Hello 👋 ${currentUser?.name}!`}
+
+                    <button onClick={handleLogout} className={styles.logoutButton}>
+                        <Image src={`/icon-logout.svg`} alt='edit article' width={20} height={20} />
+                    </button>
                 </div>
             </nav>
         </header>
