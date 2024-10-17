@@ -41,11 +41,12 @@ const CreateArticlePage = () => {
   return (
     <ProtectedRoute>
       <ArticleForm 
-        initialValues={{}}  
-        onSubmit={handleSubmit} 
-        formTitle="Create Article" 
+        initialValues={{ title: '', body: '' }}
+        onSubmit={handleSubmit}
+        formTitle="Create Article"
         isLoading={isLoading} 
-      />
+        isEditing={false}      
+        />
       {isModalOpen && (
         <Modal 
           message={message} 
